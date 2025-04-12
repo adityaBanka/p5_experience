@@ -1,9 +1,14 @@
+import P5Canvas from './components/Sketch.jsx';
+
 function App() {
-  
+
   return (
-    <>
-      <p>Hello World</p>
-    </>
+    <div className="flex flex-row">
+      <P5Canvas />
+      <P5Canvas />
+      <P5Canvas />
+      <P5Canvas />
+    </div>
   )
 }
 
