@@ -5,9 +5,6 @@ function App() {
   return (
     <div className="flex flex-row">
       <P5Canvas />
-      <P5Canvas />
-      <P5Canvas />
-      <P5Canvas />
     </div>
   )
 }

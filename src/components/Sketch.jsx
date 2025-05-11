@@ -5,23 +5,65 @@ const P5Canvas = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // The sketch function defines the p5 instance
     const sketch = (p) => {
+      let padding = 0;
+      let size = 10;
+      let grid = [];
+
+      let state = true;
+      p.mousePressed = () => {
+        if (state === true) {
+          p.noStroke();
+        }
+        if (state === false) {
+          p.stroke(5);
+        }
+        state = !state;
+      }
+
       p.setup = () => {
-        // Create a 400x400 canvas and attach it to the reference container
-        p.createCanvas(400, 400);
+        p.createCanvas(p.windowWidth, p.windowHeight);
+        p.background(0);
+        p.noStroke();
+
+        for (let x = 0; x < p.windowWidth; x += size) {
+          let col = [];
+          for (let y = 0; y < p.windowHeight; y += size) {
+            col.push({
+              color: p.random(0, 128 + 32),
+              x: x,
+              y: y,
+            });
+          }
+          grid.push(col);
+        }
       };
 
       p.draw = () => {
-        // Clear the canvas with a light gray background
-        p.background(220);
-        // Set fill color to red, remove any stroke outline
-        p.fill('red');
-        p.noStroke();
-        // Draw a circle centered at the current mouseX and mouseY
-        p.ellipse(50, 50, 50, 50);
+        p.background(0);
+        
+        p.show();
       };
+
+      p.update = () => {
+
+      }
+
+      p.show = () => {
+        for (let x = 0; x < grid.length; x++) {
+          for (let y = 0; y < grid[x].length; y++) {
+            p.fill(0, grid[x][y].color, 0);
+            p.rect(grid[x][y].x + padding/2, grid[x][y].y + padding/2, size - padding, size - padding, 5);
+          }
+        }
+      }
+
+      p.windowResized = () => {
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+      };
+
     };
+
 
     // Create a new p5 instance and attach it to the DOM element
     const myP5 = new p5(sketch, containerRef.current);
